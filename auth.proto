@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+option go_package = "/pb";
+
+message SignupMessage {
+  string name = 1;
+  string email = 2;
+  string password = 3;
+}
+
+message SigninMessage {
+  string email = 1;
+  string password = 2;
+}
+
+message Response {
+  bool status = 1;
+  string payload = 2;
+}
+
+service AuthService {
+  rpc Signup(SignupMessage) returns (Response);
+  rpc Signin(SigninMessage) returns (Response);
+}
