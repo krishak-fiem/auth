@@ -2,10 +2,15 @@ package service
 
 import (
 	"context"
+	"encoding/json"
 	"github.com/go-playground/validator/v10"
+	"github.com/krishak-fiem/auth/constants"
 	"github.com/krishak-fiem/auth/proto/pb"
 	"github.com/krishak-fiem/auth/utils"
+	consts "github.com/krishak-fiem/constants/go"
+	kafka "github.com/krishak-fiem/kafka/go"
 	authmodels "github.com/krishak-fiem/models/go/auth"
+	kafkamodels "github.com/krishak-fiem/models/go/kafka"
 	"github.com/krishak-fiem/utils/go/jwt"
 
 	"github.com/krishak-fiem/utils/go/bcrypt"
@@ -41,6 +46,14 @@ func (s *Server) Signup(ctx context.Context, message *pb.SignupMessage) (*pb.Res
 	if err != nil {
 		return &pb.Response{}, status.Error(codes.Internal, err.Error())
 	}
+
+	kafkaMessage := kafkamodels.UserCreatedMessage{Name: message.Name, Email: user.Email}
+	m, err := json.Marshal(kafkaMessage)
+	if err != nil {
+		return &pb.Response{}, status.Error(codes.Internal, err.Error())
+	}
+
+	kafka.MessageWriter(constants.KAFKA_BROKER_URL, consts.USER_CREATED, consts.AUTH_USER, m)
 
 	return &pb.Response{Payload: "User Created.", Status: true}, nil
 }

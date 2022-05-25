@@ -18,7 +18,7 @@ import (
 // Requires gRPC-Go v1.32.0 or later.
 const _ = grpc.SupportPackageIsVersion7
 
-// AuthServiceClient is the client API for AuthService service.
+// AuthServiceClient is the client API for AuthService products.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type AuthServiceClient interface {
@@ -52,7 +52,7 @@ func (c *authServiceClient) Signin(ctx context.Context, in *SigninMessage, opts 
 	return out, nil
 }
 
-// AuthServiceServer is the server API for AuthService service.
+// AuthServiceServer is the server API for AuthService products.
 // All implementations must embed UnimplementedAuthServiceServer
 // for forward compatibility
 type AuthServiceServer interface {
@@ -73,7 +73,7 @@ func (UnimplementedAuthServiceServer) Signin(context.Context, *SigninMessage) (*
 }
 func (UnimplementedAuthServiceServer) mustEmbedUnimplementedAuthServiceServer() {}
 
-// UnsafeAuthServiceServer may be embedded to opt out of forward compatibility for this service.
+// UnsafeAuthServiceServer may be embedded to opt out of forward compatibility for this products.
 // Use of this interface is not recommended, as added methods to AuthServiceServer will
 // result in compilation errors.
 type UnsafeAuthServiceServer interface {
@@ -120,7 +120,7 @@ func _AuthService_Signin_Handler(srv interface{}, ctx context.Context, dec func(
 	return interceptor(ctx, in, info, handler)
 }
 
-// AuthService_ServiceDesc is the grpc.ServiceDesc for AuthService service.
+// AuthService_ServiceDesc is the grpc.ServiceDesc for AuthService products.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var AuthService_ServiceDesc = grpc.ServiceDesc{
